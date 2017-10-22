@@ -1,7 +1,12 @@
 package filestorage.repositories;
 
-import filestorage.models.User;
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface UserRepository extends JpaRepository<User, Integer>{
+import filestorage.models.User;
+
+
+public interface UserRepository extends JpaRepository<User, Long>{
+    List<User> findByEmailContaining(String email);
+    User findByEmail(String email);
 }

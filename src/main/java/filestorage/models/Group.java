@@ -12,15 +12,13 @@ public class Group {
 
     private String name;
 
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "group_user",
+            joinColumns = @JoinColumn(name = "group_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id")
+    )
     private Set<User> users;
-    private Set<File> files;
-
-    protected Group() {
-    }
-
-    public Group(String name) {
-        this.name = name;
-    }
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
@@ -28,6 +26,18 @@ public class Group {
             joinColumns = @JoinColumn(name = "group_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "file_id", referencedColumnName = "id")
     )
+    private Set<File> files;
+
+    protected Group() {
+    }
+
+    public Group(String name, Set<User> users, Set<File> files) {
+        this.name = name;
+
+        this.users = users;
+        this.files = files;
+    }
+
     public Set<File> getFiles() {
         return files;
     }
@@ -36,12 +46,6 @@ public class Group {
         this.files = files;
     }
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(
-            name = "group_user",
-            joinColumns = @JoinColumn(name = "group_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id")
-    )
     public Set<User> getUsers() {
         return users;
     }

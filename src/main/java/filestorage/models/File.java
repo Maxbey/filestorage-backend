@@ -9,23 +9,27 @@ public class File {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private User user;
     private String name;
     private String content;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    @ManyToMany(mappedBy = "files")
     private Set<Group> groups;
 
     protected File() {
     }
 
-    public File(User user, String name, String content) {
+    public File(String name, String content, User user, Set<Group> groups) {
         this.user = user;
         this.name = name;
         this.content = content;
+
+        this.groups = groups;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
     public User getUser() {
         return user;
     }
@@ -50,7 +54,6 @@ public class File {
         this.content = content;
     }
 
-    @ManyToMany(mappedBy = "groups")
     public Set<Group> getGroups() {
         return groups;
     }
