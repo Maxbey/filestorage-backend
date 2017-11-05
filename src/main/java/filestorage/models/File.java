@@ -1,6 +1,10 @@
 package filestorage.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Set;
 
 @Entity
@@ -9,9 +13,13 @@ public class File {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @NotNull
     private String name;
+
+    @NotNull
     private String content;
 
+    @NotNull
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
@@ -46,18 +54,22 @@ public class File {
         this.name = name;
     }
 
+    @JsonIgnore
     public String getContent() {
         return content;
     }
 
+    @JsonProperty
     public void setContent(String content) {
         this.content = content;
     }
 
+    @JsonIgnore
     public Set<Group> getGroups() {
         return groups;
     }
 
+    @JsonProperty
     public void setGroups(Set<Group> groups) {
         this.groups = groups;
     }

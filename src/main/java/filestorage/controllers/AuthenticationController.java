@@ -24,14 +24,14 @@ public class AuthenticationController {
     @Autowired
     private AuthenticationService authenticationService;
 
-    @RequestMapping(path = "/signup",method = RequestMethod.POST)
+    @RequestMapping(path = "/register",method = RequestMethod.POST)
     public ResponseEntity<?> createUser(@Valid @RequestBody User user) {
         User createdUser = authenticationService.createUser(user);
 
         return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
     }
 
-    @RequestMapping(path = "/signin",method = RequestMethod.POST)
+    @RequestMapping(path = "/login",method = RequestMethod.POST)
     public ResponseEntity<?> performLogin(@Valid @RequestBody LoginRequest request) {
         User user = authenticationService.getUserByEmail(request.getEmail());
 
@@ -53,7 +53,7 @@ public class AuthenticationController {
 
     private ResponseEntity<?> unathorized(){
         Map<String, String> responseData = new HashMap<String, String>();
-        responseData.put("error", "Invalid email or password");
+        responseData.put("error", "Invalid email or password.");
 
         return new ResponseEntity<>(responseData, HttpStatus.UNAUTHORIZED);
     }

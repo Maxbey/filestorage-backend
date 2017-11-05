@@ -1,17 +1,25 @@
 package filestorage.models;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 import java.util.Set;
 
 @Entity
+@Table(name = "app_group")
 public class Group {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @NotNull
     private String name;
 
+    @ManyToOne
+    @JoinColumn(name = "owner_id")
+    private User owner;
+
+    @NotNull
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "group_user",
@@ -20,6 +28,7 @@ public class Group {
     )
     private Set<User> users;
 
+    @NotNull
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "group_file",
@@ -31,8 +40,9 @@ public class Group {
     protected Group() {
     }
 
-    public Group(String name, Set<User> users, Set<File> files) {
+    public Group(String name, User owner, Set<User> users, Set<File> files) {
         this.name = name;
+        this.owner = owner;
 
         this.users = users;
         this.files = files;
@@ -60,5 +70,17 @@ public class Group {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public User getOwner() {
+        return owner;
+    }
+
+    public void setOwner(User owner) {
+        this.owner = owner;
+    }
+
+    public Long getId() {
+        return id;
     }
 }

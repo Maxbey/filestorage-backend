@@ -10,7 +10,6 @@ services:
       APP_DB_NAME: 'filestorage'
       APP_DB_USERNAME: 'user'
       APP_DB_PASSWORD: 'pass'
-      APP_DB_DDL: 'create'
 
   db:
     image: healthcheck/mysql
