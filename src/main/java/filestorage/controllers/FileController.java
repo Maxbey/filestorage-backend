@@ -39,4 +39,16 @@ public class FileController extends AbstractController{
 
         return new ResponseEntity<>(file, HttpStatus.OK);
     }
+
+    @RequestMapping(path = "/{id}", method = RequestMethod.DELETE)
+    public ResponseEntity<?> removeFile(@PathVariable("id") long id) {
+        File file = fileService.getUserFile(id, getCurrentUser());
+
+        if (file == null) {
+            return notFound();
+        }
+
+        fileService.removeFile(file);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }
