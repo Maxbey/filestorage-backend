@@ -32,4 +32,11 @@ public class FileController extends AbstractController{
 
         return new ResponseEntity<>(file, HttpStatus.CREATED);
     }
+
+    @RequestMapping(path = "/{id}", method = RequestMethod.GET)
+    public ResponseEntity<?> getFile(@PathVariable("id") long id) {
+        File file = fileService.getUserFile(id, getCurrentUser());
+
+        return new ResponseEntity<>(file, HttpStatus.OK);
+    }
 }
