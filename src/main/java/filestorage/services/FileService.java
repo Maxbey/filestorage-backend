@@ -45,4 +45,14 @@ public class FileService {
     public void removeFile(File file){
         fileRepository.delete(file);
     }
+
+    public File updateFile(File file, FileRequest request, User user) {
+        Set<Group> groups = groupRepository.findByOwnerId(user.getId());
+
+        file.setName(request.getName());
+        file.setContent(request.getContent());
+        file.setGroups(groups);
+
+        return fileRepository.save(file);
+    }
 }

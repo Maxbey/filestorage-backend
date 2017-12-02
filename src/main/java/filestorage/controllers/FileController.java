@@ -1,6 +1,7 @@
 package filestorage.controllers;
 
 import filestorage.models.File;
+import filestorage.models.User;
 import filestorage.repositories.UserRepository;
 import filestorage.requests.FileRequest;
 import filestorage.services.FileService;
@@ -38,6 +39,20 @@ public class FileController extends AbstractController{
         File file = fileService.getUserFile(id, getCurrentUser());
 
         return new ResponseEntity<>(file, HttpStatus.OK);
+    }
+
+    @RequestMapping(path = "/{id}", method = RequestMethod.PUT)
+    public ResponseEntity<?> updateFile(@PathVariable("id") long id, @Valid @RequestBody FileRequest request) {
+        User user = getCurrentUser();
+        File file = fileService.getUserFile(id, getCurrentUser());
+
+        if (file == null) {
+            return notFound();
+        }
+
+        file = fileService.updateFile(file, request, user);
+
+        return new ResponseEntity<>(file, HttpStatus.ACCEPTED);
     }
 
     @RequestMapping(path = "/{id}", method = RequestMethod.DELETE)
