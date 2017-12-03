@@ -9,6 +9,7 @@ import java.util.Set;
 
 @Entity
 public class File {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -28,6 +29,12 @@ public class File {
     private Set<Group> groups;
 
     protected File() {
+    }
+
+    public File(String name, String content, User user) {
+        this.user = user;
+        this.name = name;
+        this.content = content;
     }
 
     public File(String name, String content, User user, Set<Group> groups) {
@@ -54,12 +61,10 @@ public class File {
         this.name = name;
     }
 
-    @JsonIgnore
     public String getContent() {
         return content;
     }
 
-    @JsonProperty
     public void setContent(String content) {
         this.content = content;
     }

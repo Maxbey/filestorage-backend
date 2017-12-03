@@ -24,11 +24,16 @@ public class FileService {
         return fileRepository.findByIdAndUserId(id, user.getId());
     }
 
-    public File createFile(FileRequest request, User user) {
-        Set<Group> groups = groupRepository.findByOwnerId(user.getId());
-        File file = new File(request.getName(), request.getContent(), user, groups);
+    public File uploadFile(File file, User user) {
+        File newFile = new File(file.getName(), file.getContent(), user);
 
-        return fileRepository.save(file);
+        return fileRepository.saveAndFlush(newFile);
+    }
+
+    public File createFile(FileRequest request, User user) {
+        File file = new File(request.getName(), request.getContent(), user);
+
+        return fileRepository.saveAndFlush(file);
     }
 
     public Set<File> getUserAvailableFiles(User user){
@@ -37,22 +42,12 @@ public class FileService {
         for (Group group : user.getGroups()) {
             groupIds.add(group.getId());
         }
-        
+
 
         return fileRepository.findByUserIdOrGroups_idIn(user.getId(), groupIds);
     }
 
     public void removeFile(File file){
         fileRepository.delete(file);
-    }
-
-    public File updateFile(File file, FileRequest request, User user) {
-        Set<Group> groups = groupRepository.findByOwnerId(user.getId());
-
-        file.setName(request.getName());
-        file.setContent(request.getContent());
-        file.setGroups(groups);
-
-        return fileRepository.save(file);
     }
 }
