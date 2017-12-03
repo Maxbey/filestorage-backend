@@ -4,36 +4,48 @@ import filestorage.models.File;
 import filestorage.models.Group;
 import filestorage.models.User;
 import filestorage.repositories.FileRepository;
-import filestorage.repositories.GroupRepository;
-import filestorage.requests.FileRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class FileService {
     @Autowired
     private FileRepository fileRepository;
 
-    @Autowired
-    private GroupRepository groupRepository;
-
     public File getUserFile(Long id, User user){
         return fileRepository.findByIdAndUserId(id, user.getId());
     }
 
-    public File uploadFile(File file, User user) {
-        File newFile = new File(file.getName(), file.getContent(), user);
+    protected File createFile(User user, String fileName, String content) {
+        File newFile = new File(fileName, content, user);
 
         return fileRepository.saveAndFlush(newFile);
     }
 
-    public File createFile(FileRequest request, User user) {
-        File file = new File(request.getName(), request.getContent(), user);
+    public ArrayList<File> uploadFiles(MultipartHttpServletRequest request, User user) {
+        ArrayList<File> createdFiles = new ArrayList<File>();
+        Iterator<String> iterator = request.getFileNames();
 
-        return fileRepository.saveAndFlush(file);
+        try {
+
+            while (iterator.hasNext()) {
+                String uploadedFile = iterator.next();
+                MultipartFile file = request.getFile(uploadedFile);
+                String filename = file.getOriginalFilename();
+                String content = new String(file.getBytes());
+
+                createdFiles.add(createFile(user, filename, content));
+            }
+        }
+        catch (Exception exception) {
+            return null;
+        }
+
+        return createdFiles;
     }
 
     public Set<File> getUserAvailableFiles(User user){

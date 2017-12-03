@@ -78,4 +78,8 @@ public class File {
     public void setGroups(Set<Group> groups) {
         this.groups = groups;
     }
+
+    public Long getId() {
+        return id;
+    }
 }

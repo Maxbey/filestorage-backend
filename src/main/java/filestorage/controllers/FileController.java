@@ -1,20 +1,14 @@
 package filestorage.controllers;
 
 import filestorage.models.File;
-import filestorage.models.User;
-import filestorage.repositories.UserRepository;
-import filestorage.requests.FileRequest;
 import filestorage.services.FileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import javax.validation.Valid;
-import java.util.Iterator;
-import java.util.Set;
+import java.util.*;
 
 @CrossOrigin
 @RestController
@@ -27,38 +21,27 @@ public class FileController extends AbstractController{
     public ResponseEntity<?> listFiles() {
         Set<File> files = fileService.getUserAvailableFiles(getCurrentUser());
 
-        if (files == null) {
-            return notFound();
-        }
-
         return new ResponseEntity<>(files, HttpStatus.OK);
     }
 
     @PostMapping(consumes = "multipart/form-data")
-    public ResponseEntity<?> createFile(MultipartHttpServletRequest request) {
-        try {
-            Iterator<String> iterator = request.getFileNames();
+    public ResponseEntity<?> createFiles(MultipartHttpServletRequest request) {
+        ArrayList<File> uploaded = fileService.uploadFiles(request, getCurrentUser());
 
-            while (iterator.hasNext()) {
-                String uploadedFile = iterator.next();
-                MultipartFile file = request.getFile(uploadedFile);
-                String filename = file.getOriginalFilename();
-                String content = new String(file.getBytes());
-
-                File newFile = new File(filename, content, getCurrentUser());
-
-                fileService.uploadFile(newFile, getCurrentUser());
-            }
+        if (uploaded == null) {
+            fileUploadError();
         }
-        catch (Exception ex) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-        return new ResponseEntity<>("{ good: very }", HttpStatus.OK);
+
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @RequestMapping(path = "/{id}", method = RequestMethod.GET)
     public ResponseEntity<?> getFile(@PathVariable("id") long id) {
         File file = fileService.getUserFile(id, getCurrentUser());
+
+        if (file == null) {
+            notFound();
+        }
 
         return new ResponseEntity<>(file, HttpStatus.OK);
     }
@@ -73,5 +56,12 @@ public class FileController extends AbstractController{
 
         fileService.removeFile(file);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    protected ResponseEntity<?> fileUploadError(){
+        Map<String, String> responseData = new HashMap<String, String>();
+        responseData.put("error", "File can't be uploaded.");
+
+        return new ResponseEntity<>(responseData, HttpStatus.BAD_REQUEST);
     }
 }
