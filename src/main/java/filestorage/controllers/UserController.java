@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import filestorage.models.User;
 
-
+@CrossOrigin
 @RestController
 @RequestMapping("/user")
 public class UserController extends AbstractController{
