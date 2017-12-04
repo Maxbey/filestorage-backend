@@ -15,6 +15,12 @@ public class AuthenticationService {
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
+    public boolean isEmailFree(String email){
+        User user = userRepository.findByEmail(email);
+
+        return user == null;
+    }
+
     public User createUser(User user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
 

@@ -25,6 +25,13 @@ public class AuthenticationController {
 
     @RequestMapping(path = "/register",method = RequestMethod.POST)
     public ResponseEntity<?> createUser(@Valid @RequestBody User user) {
+        if (!authenticationService.isEmailFree(user.getEmail())) {
+            ValidationErrorResponse response = new ValidationErrorResponse();
+            response.addError("email", "User with this email already exists");
+
+            return new ResponseEntity<>(response.getResponse(), HttpStatus.BAD_REQUEST);
+        }
+
         User createdUser = authenticationService.createUser(user);
 
         return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
@@ -52,7 +59,7 @@ public class AuthenticationController {
 
     private ResponseEntity<?> unathorized(){
         ValidationErrorResponse response = new ValidationErrorResponse();
-        response.addError("email", "Invalid email or password.");
+        response.addError("email", "Invalid email or password");
 
         return new ResponseEntity<>(response.getResponse(), HttpStatus.UNAUTHORIZED);
     }
