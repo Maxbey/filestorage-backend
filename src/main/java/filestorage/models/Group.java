@@ -1,5 +1,7 @@
 package filestorage.models;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
@@ -13,6 +15,7 @@ public class Group {
     private Long id;
 
     @NotNull
+    @NotEmpty
     private String name;
 
     @ManyToOne
@@ -20,6 +23,7 @@ public class Group {
     private User owner;
 
     @NotNull
+    @NotEmpty
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "group_user",

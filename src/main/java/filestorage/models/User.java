@@ -4,6 +4,7 @@ import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -17,15 +18,19 @@ public class User {
     private Long id;
 
     @NotNull
+    @NotEmpty
     private String email;
 
     @NotNull
+    @NotEmpty
     private String password;
 
     @NotNull
+    @NotEmpty
     private String firstName;
 
     @NotNull
+    @NotEmpty
     private String lastName;
 
     @JsonIgnore
