@@ -2,6 +2,7 @@ package filestorage.controllers;
 
 import javax.validation.Valid;
 
+import filestorage.validation.ValidationErrorResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -50,9 +51,9 @@ public class AuthenticationController {
     }
 
     private ResponseEntity<?> unathorized(){
-        Map<String, String> responseData = new HashMap<String, String>();
-        responseData.put("error", "Invalid email or password.");
+        ValidationErrorResponse response = new ValidationErrorResponse();
+        response.addError("email", "Invalid email or password.");
 
-        return new ResponseEntity<>(responseData, HttpStatus.UNAUTHORIZED);
+        return new ResponseEntity<>(response.getResponse(), HttpStatus.UNAUTHORIZED);
     }
 }
