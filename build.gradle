@@ -32,5 +32,11 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter-security")
     compile("io.jsonwebtoken:jjwt:0.7.0")
     compile("org.flywaydb:flyway-core:4.2.0")
+
     testCompile('org.springframework.boot:spring-boot-starter-test')
+    testCompile('org.springframework.security:spring-security-test')
+    testCompile('junit:junit')
+    testCompile('org.hamcrest:hamcrest-core')
+    testCompile('org.hamcrest:hamcrest-library')
+    testCompile('org.hsqldb:hsqldb')
 }
