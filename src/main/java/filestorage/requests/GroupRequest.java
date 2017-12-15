@@ -11,11 +11,9 @@ public class GroupRequest {
     private String name;
 
     @NotNull
-    @NotEmpty
     private Set<Long> users;
 
     @NotNull
-    @NotEmpty
     private Set<Long> files;
 
     public String getName() {

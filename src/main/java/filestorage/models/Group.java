@@ -23,7 +23,6 @@ public class Group {
     private User owner;
 
     @NotNull
-    @NotEmpty
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "group_user",
