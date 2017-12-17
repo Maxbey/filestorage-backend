@@ -14,5 +14,5 @@ CREATE TABLE `group_file` (
   `file_id` bigint(20) NOT NULL,
   PRIMARY KEY (`group_id`,`file_id`),
   KEY `FK_group_file` (`file_id`),
-  CONSTRAINT `FK_group_file` FOREIGN KEY (`file_id`) REFERENCES `file` (`id`)
+  CONSTRAINT `FK_group_file` FOREIGN KEY (`file_id`) REFERENCES `file` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

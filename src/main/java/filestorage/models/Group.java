@@ -23,7 +23,7 @@ public class Group {
     private User owner;
 
     @NotNull
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany()
     @JoinTable(
             name = "group_user",
             joinColumns = @JoinColumn(name = "group_id", referencedColumnName = "id"),
@@ -32,7 +32,7 @@ public class Group {
     private Set<User> users;
 
     @NotNull
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany()
     @JoinTable(
             name = "group_file",
             joinColumns = @JoinColumn(name = "group_id", referencedColumnName = "id"),

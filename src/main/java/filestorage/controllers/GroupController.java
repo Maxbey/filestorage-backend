@@ -66,6 +66,8 @@ public class GroupController extends AbstractController{
             return notFound();
         }
 
+        groupService.removeGroup(group);
+
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
