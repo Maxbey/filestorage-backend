@@ -53,6 +53,7 @@ public class AuthenticationController {
 
         Map<String, String> responseData = new HashMap<String, String>();
         responseData.put("token", token);
+        responseData.put("user_id", user.getId().toString());
 
         return new ResponseEntity<>(responseData, HttpStatus.CREATED);
     }
