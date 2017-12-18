@@ -16,6 +16,11 @@ public class FileService {
     @Autowired
     private FileRepository fileRepository;
 
+    public File getUserAvailableFile(Long id, User user){
+
+        return fileRepository.findOne(id);
+    }
+
     public File getUserFile(Long id, User user){
         return fileRepository.findByIdAndUserId(id, user.getId());
     }

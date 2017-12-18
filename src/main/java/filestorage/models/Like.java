@@ -1,5 +1,8 @@
 package filestorage.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
@@ -28,10 +31,12 @@ public class Like {
         this.file = file;
     }
 
+    @JsonIgnore
     public File getFile() {
         return file;
     }
 
+    @JsonProperty
     public void setFile(File file) {
         this.file = file;
     }

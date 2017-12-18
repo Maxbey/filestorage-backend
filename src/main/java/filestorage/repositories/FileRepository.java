@@ -13,4 +13,6 @@ public interface FileRepository extends JpaRepository<File, Long>{
     File findByIdAndUserId(Long id, Long userId);
 
     Set<File> findByUserIdOrGroups_idIn(Long userId, Set<Long> ids);
+
+    File findByIdAndUserIdOrGroups_idIn(Long id, Long userId, Set<Long> ids);
 }

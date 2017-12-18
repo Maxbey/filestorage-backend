@@ -28,6 +28,12 @@ public class File {
     @ManyToMany(mappedBy = "files")
     private Set<Group> groups;
 
+    @OneToMany(mappedBy = "file", cascade = CascadeType.ALL)
+    private Set<Comment> comments;
+
+    @OneToMany(mappedBy = "file", cascade = CascadeType.ALL)
+    private Set<Like> likes;
+
     protected File() {
     }
 
@@ -43,6 +49,10 @@ public class File {
         this.content = content;
 
         this.groups = groups;
+    }
+
+    public Long getId() {
+        return id;
     }
 
     public User getUser() {
@@ -79,7 +89,11 @@ public class File {
         this.groups = groups;
     }
 
-    public Long getId() {
-        return id;
+    public Set<Comment> getComments() {
+        return comments;
+    }
+
+    public Set<Like> getLikes() {
+        return likes;
     }
 }

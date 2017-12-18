@@ -8,17 +8,13 @@ import java.util.Set;
 public class CommentRequest {
     @NotNull
     @NotEmpty
-    private Long file;
-
-    @NotNull
-    @NotEmpty
     private String content;
 
-    public Long getFile() {
-        return file;
+    public String getContent() {
+        return content;
     }
 
-    public void setFile(Long file) {
-        this.file = file;
+    public void setContent(String content) {
+        this.content = content;
     }
 }
