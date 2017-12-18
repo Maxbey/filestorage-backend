@@ -50,7 +50,7 @@ public class FileController extends AbstractController{
 
     @RequestMapping(path = "/{id}", method = RequestMethod.GET)
     public ResponseEntity<?> getFile(@PathVariable("id") long id) {
-        File file = fileService.getUserFile(id, getCurrentUser());
+        File file = fileService.getUserAvailableFile(id, getCurrentUser());
 
         if (file == null) {
             notFound();
