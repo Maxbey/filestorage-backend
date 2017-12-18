@@ -80,7 +80,7 @@ public class FileController extends AbstractController{
         }
 
         likeService.createLike(getCurrentUser(), file);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        return new ResponseEntity<>(file, HttpStatus.OK);
     }
 
     @RequestMapping(path = "/{id}/unlike", method = RequestMethod.POST)
@@ -98,7 +98,7 @@ public class FileController extends AbstractController{
         }
 
         likeService.removeLike(like);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(file, HttpStatus.OK);
     }
 
     @RequestMapping(path = "/{id}/comment", method = RequestMethod.POST)
@@ -110,7 +110,7 @@ public class FileController extends AbstractController{
         }
 
         commentService.createComment(request.getContent(), getCurrentUser(), file);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        return new ResponseEntity<>(file, HttpStatus.OK);
     }
 
     @RequestMapping(path = "/{id}/comment/{commentId}", method = RequestMethod.DELETE)
@@ -129,7 +129,7 @@ public class FileController extends AbstractController{
 
         commentService.removeComment(comment);
 
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(file, HttpStatus.OK);
     }
 
     protected ResponseEntity<?> fileUploadError(){

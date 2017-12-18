@@ -17,4 +17,9 @@ public class UserController extends AbstractController{
         return new ResponseEntity<>(userRepository.findByEmailContaining(email), HttpStatus.OK);
     }
 
+    @RequestMapping(path = "/current", method = RequestMethod.GET)
+    public ResponseEntity<?> getCurrent() {
+        return new ResponseEntity<>(getCurrentUser(), HttpStatus.OK);
+    }
+
 }
