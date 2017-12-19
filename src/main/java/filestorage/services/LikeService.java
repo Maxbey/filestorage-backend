@@ -14,7 +14,7 @@ public class LikeService {
 
     public Like getLike(User user, File file){
 
-        return likeRepository.findByUserIdAndFileId(file.getId(), user.getId());
+        return likeRepository.findByUserIdAndFileId(user.getId(), file.getId());
     }
 
     public Like createLike(User user, File file){
