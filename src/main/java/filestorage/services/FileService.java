@@ -16,11 +16,6 @@ public class FileService {
     @Autowired
     private FileRepository fileRepository;
 
-    public File getUserAvailableFile(Long id, User user){
-
-        return fileRepository.findOne(id);
-    }
-
     public File getUserFile(Long id, User user){
         return fileRepository.findByIdAndUserId(id, user.getId());
     }
@@ -53,13 +48,24 @@ public class FileService {
         return createdFiles;
     }
 
-    public Set<File> getUserAvailableFiles(User user){
+    public File getUserAvailableFile(Long id, User user){
+        Set<Long> groupIds = getUserGroupIds(user);
+
+        return fileRepository.findByIdAndUserIdOrGroups_idIn(id, user.getId(), groupIds);
+    }
+
+    private Set<Long> getUserGroupIds(User user){
         Set<Long> groupIds = new HashSet<Long>();
 
         for (Group group : user.getGroups()) {
             groupIds.add(group.getId());
         }
 
+        return groupIds;
+    }
+
+    public Set<File> getUserAvailableFiles(User user){
+        Set<Long> groupIds = getUserGroupIds(user);
 
         return fileRepository.findByUserIdOrGroups_idIn(user.getId(), groupIds);
     }
