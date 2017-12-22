@@ -29,6 +29,7 @@ public class File {
     private Set<Group> groups;
 
     @OneToMany(mappedBy = "file", cascade = CascadeType.ALL)
+    @OrderBy("created_at")
     private Set<Comment> comments;
 
     @OneToMany(mappedBy = "file", cascade = CascadeType.ALL)
