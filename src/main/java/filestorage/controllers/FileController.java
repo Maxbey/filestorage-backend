@@ -37,6 +37,13 @@ public class FileController extends AbstractController{
         return new ResponseEntity<>(files, HttpStatus.OK);
     }
 
+    @RequestMapping(path = "/favorite/", method = RequestMethod.GET)
+    public ResponseEntity<?> listFavoriteFiles() {
+        Set<File> files = fileService.getUserFavoriteFiles(getCurrentUser());
+
+        return new ResponseEntity<>(files, HttpStatus.OK);
+    }
+
     @PostMapping(consumes = "multipart/form-data")
     public ResponseEntity<?> createFiles(MultipartHttpServletRequest request) {
         ArrayList<File> uploaded = fileService.uploadFiles(request, getCurrentUser());

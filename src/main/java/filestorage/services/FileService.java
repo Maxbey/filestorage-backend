@@ -64,6 +64,10 @@ public class FileService {
         return groupIds;
     }
 
+    public Set<File> getUserFavoriteFiles(User user){
+        return fileRepository.findByLikes_user_id(user.getId());
+    }
+
     public Set<File> getUserAvailableFiles(User user){
         Set<Long> groupIds = getUserGroupIds(user);
 
