@@ -51,7 +51,13 @@ public class FileService {
     public File getUserAvailableFile(Long id, User user){
         Set<Long> groupIds = getUserGroupIds(user);
 
-        return fileRepository.findByIdAndUserIdOrGroups_idIn(id, user.getId(), groupIds);
+        File file = fileRepository.findByIdAndUserId(id, user.getId());
+
+        if (file == null){
+            file = fileRepository.findByIdAndGroups_idIn(id, groupIds);
+        }
+
+        return file;
     }
 
     private Set<Long> getUserGroupIds(User user){
