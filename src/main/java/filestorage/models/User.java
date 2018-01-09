@@ -57,7 +57,16 @@ public class User {
         this.groups = groups;
     }
 
+    public User(String email, String password, String firstName, String lastName) {
+        this.email = email;
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
+
     public Long getId() { return id; }
+
+    @JsonIgnore
+    public void setId(Long id) {this.id = id;}
 
     public String getEmail() {
         return email;
