@@ -5,6 +5,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -39,9 +40,6 @@ public class Group {
             inverseJoinColumns = @JoinColumn(name = "file_id", referencedColumnName = "id")
     )
     private Set<File> files;
-
-    protected Group() {
-    }
 
     public Group(String name, User owner, Set<User> users, Set<File> files) {
         this.name = name;
@@ -85,5 +83,9 @@ public class Group {
 
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }

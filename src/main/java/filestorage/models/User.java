@@ -48,15 +48,6 @@ public class User {
     protected User() {
     }
 
-    public User(String email, String password, String firstName, String lastName, Set<File> files, Set<Group> groups) {
-        this.email = email;
-        this.firstName = firstName;
-        this.lastName = lastName;
-
-        this.files = files;
-        this.groups = groups;
-    }
-
     public User(String email, String password, String firstName, String lastName) {
         this.email = email;
         this.firstName = firstName;
