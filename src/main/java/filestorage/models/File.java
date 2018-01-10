@@ -97,4 +97,8 @@ public class File {
     public Set<Like> getLikes() {
         return likes;
     }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 }
