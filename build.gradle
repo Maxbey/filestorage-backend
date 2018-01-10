@@ -36,7 +36,11 @@ dependencies {
     testCompile('org.springframework.boot:spring-boot-starter-test')
     testCompile('org.springframework.security:spring-security-test')
     testCompile('junit:junit')
+    testCompile('org.powermock:powermock:1.6.5')
+    testCompile('org.powermock:powermock-module-junit4:1.6.5')
+    testCompile('org.powermock:powermock-api-mockito:1.6.5')
     testCompile('org.hamcrest:hamcrest-core')
     testCompile('org.hamcrest:hamcrest-library')
     testCompile('org.hsqldb:hsqldb')
+    testCompile('com.google.code.gson:gson:2.8.1')
 }

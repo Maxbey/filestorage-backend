@@ -47,10 +47,6 @@ public class JWTAuthenticationFilter extends BasicAuthenticationFilter {
         }
         String jwt = header[1];
 
-        if (jwt == null){
-            return null;
-        }
-
         Long userId = JWTService.authenticateJWT(jwt);
 
         if (userId == null){
