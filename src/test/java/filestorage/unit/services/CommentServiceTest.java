@@ -1,10 +1,11 @@
 package filestorage.unit.services;
 
+import filestorage.models.Comment;
 import filestorage.models.File;
 import filestorage.models.Like;
 import filestorage.models.User;
-import filestorage.repositories.LikeRepository;
-import filestorage.services.LikeService;
+import filestorage.repositories.CommentRepository;
+import filestorage.services.CommentService;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -19,13 +20,13 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@WebMvcTest(value = LikeService.class)
-public class LikeServiceTest {
+@WebMvcTest(value = CommentService.class)
+public class CommentServiceTest {
     @MockBean
-    private LikeRepository likeRepository;
+    private CommentRepository commentRepository;
 
     @Autowired
-    private LikeService service;
+    private CommentService service;
 
     private User user;
     private File file;
@@ -40,24 +41,28 @@ public class LikeServiceTest {
     }
 
     @Test
-    public void testGetLike() throws Exception {
-        service.getLike(user, file);
+    public void testGetComment() throws Exception {
+        Long commentId = 1L;
 
-        verify(likeRepository, times(1)).findByUserIdAndFileId(1L, 2L);
+        service.getComment(commentId, user);
+
+        verify(commentRepository, times(1)).findByIdAndUserId(
+                commentId, user.getId()
+        );
     }
 
     @Test
-    public void testCreateLike() throws Exception {
-        service.createLike(user, file);
+    public void testCreateComment() throws Exception {
+        service.createComment("", user, file);
 
-        verify(likeRepository, times(1)).save(any(Like.class));
+        verify(commentRepository, times(1)).save(any(Comment.class));
     }
 
     @Test
-    public void testRemoveLike() throws Exception {
-        Like like = new Like(user, file);
-        service.removeLike(like);
+    public void testRemoveComment() throws Exception {
+        Comment comment = new Comment("content", user, file);
 
-        verify(likeRepository, times(1)).delete(like);
+        service.removeComment(comment);
+        verify(commentRepository, times(1)).delete(comment);
     }
 }
