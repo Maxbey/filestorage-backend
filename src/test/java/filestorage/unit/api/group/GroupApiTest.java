@@ -11,7 +11,6 @@ import filestorage.repositories.UserRepository;
 import filestorage.requests.GroupRequest;
 import filestorage.services.GroupService;
 import filestorage.services.JWTService;
-import org.json.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -27,7 +26,6 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.*;
 
-import static org.mockito.Matchers.anyObject;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;

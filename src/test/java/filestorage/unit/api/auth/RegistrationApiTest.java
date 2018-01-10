@@ -66,6 +66,7 @@ public class RegistrationApiTest {
     public void testAttemptToRegisterWithExistedEmail() throws Exception {
         User existedUser = new User(validPayload.get("email"), "pass", "lname", "fname");
         HashMap<String, String> expectedError = new HashMap<String, String>();
+
         expectedError.put("field", "email");
         expectedError.put("defaultMessage", "User with this email already exists");
 

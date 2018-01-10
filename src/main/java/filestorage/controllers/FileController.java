@@ -49,7 +49,7 @@ public class FileController extends AbstractController{
         ArrayList<File> uploaded = fileService.uploadFiles(request, getCurrentUser());
 
         if (uploaded == null) {
-            fileUploadError();
+            return fileUploadError();
         }
 
         return new ResponseEntity<>(HttpStatus.CREATED);
@@ -60,7 +60,7 @@ public class FileController extends AbstractController{
         File file = fileService.getUserAvailableFile(id, getCurrentUser());
 
         if (file == null) {
-            notFound();
+            return notFound();
         }
 
         return new ResponseEntity<>(file, HttpStatus.OK);
@@ -75,7 +75,7 @@ public class FileController extends AbstractController{
         }
 
         fileService.removeFile(file);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @RequestMapping(path = "/{id}/like", method = RequestMethod.POST)
@@ -141,7 +141,7 @@ public class FileController extends AbstractController{
 
     protected ResponseEntity<?> fileUploadError(){
         Map<String, String> responseData = new HashMap<String, String>();
-        responseData.put("error", "File can't be uploaded.");
+        responseData.put("error", "File cannot be uploaded.");
 
         return new ResponseEntity<>(responseData, HttpStatus.BAD_REQUEST);
     }
