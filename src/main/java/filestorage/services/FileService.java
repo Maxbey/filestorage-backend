@@ -23,7 +23,7 @@ public class FileService {
     protected File createFile(User user, String fileName, String content) {
         File newFile = new File(fileName, content, user);
 
-        return fileRepository.saveAndFlush(newFile);
+        return fileRepository.save(newFile);
     }
 
     public ArrayList<File> uploadFiles(MultipartHttpServletRequest request, User user) {

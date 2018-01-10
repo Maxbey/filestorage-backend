@@ -2,7 +2,6 @@ package filestorage.unit.services;
 
 import filestorage.models.Comment;
 import filestorage.models.File;
-import filestorage.models.Like;
 import filestorage.models.User;
 import filestorage.repositories.CommentRepository;
 import filestorage.services.CommentService;

@@ -28,9 +28,6 @@ public class Comment {
     @NotNull
     private String content;
 
-    protected Comment() {
-    }
-
     public Comment(String content, User user, File file) {
         this.user = user;
         this.file = file;
