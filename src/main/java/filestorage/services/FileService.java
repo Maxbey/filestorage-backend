@@ -20,7 +20,7 @@ public class FileService {
         return fileRepository.findByIdAndUserId(id, user.getId());
     }
 
-    protected File createFile(User user, String fileName, String content) {
+    public File createFile(User user, String fileName, String content) {
         File newFile = new File(fileName, content, user);
 
         return fileRepository.save(newFile);
