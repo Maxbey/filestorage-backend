@@ -19,10 +19,12 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.util.HashMap;
 
 import static org.hamcrest.core.Is.is;
+import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -81,13 +83,17 @@ public class RegistrationApiTest {
     @Test
     public void testSuccessfulRegistration() throws Exception {
         User user = new User(validPayload.get("email"), "pass", "lname", "fname");
-
+        user.setId(1L);
+        when(authenticationService.createUser(any(User.class))).thenReturn(user);
         when(authenticationService.isEmailFree(user.getEmail())).thenReturn(true);
 
         mockMvc.perform(post(url)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(new JSONObject(validPayload).toString()))
-                .andExpect(status().isCreated());
+                .andExpect(status().isCreated())
+                .andExpect(content().json(
+                        "{'email':'email@email.com', 'firstName': 'lname', 'lastName': 'fname'}")
+                );
 
         verify(authenticationService, times(1)).isEmailFree(user.getEmail());
     }
